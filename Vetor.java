@@ -5,7 +5,7 @@ public class Vetor<T> {
     
     @SuppressWarnings("unchecked")
     public Vetor(int capacity) {
-        this.A = n(T[]) new Object[capacity];
+        this.A = (T[]) new Object[capacity];
         this.size = 0;
         this.capacity = capacity;
     }

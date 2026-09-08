@@ -1,20 +1,20 @@
 public class Teatro {
     private Vetor <Espetaculo> espetaculos;
-    private Vetor <Reservas> reservas;
+    private Vetor <Reserva> reservas;
 
-    public Teatro(Vetor<Espetaculo> espetaculos, Vetor<Reservas> reservas) {
+    public Teatro(Vetor<Espetaculo> espetaculos, Vetor<Reserva> reservas) {
         this.espetaculos = espetaculos;
         this.reservas = reservas;
     }
 
 
-    public <Espetaculo> getEspetaculos() {
+    public Vetor<Espetaculo> getEspetaculos() {
         return espetaculos;
     }
 
-    public <Reservas> getReservas() {
+    public Vetor<Reserva> getReservas() {
         return reservas;
     }
-    
+
 
 }
