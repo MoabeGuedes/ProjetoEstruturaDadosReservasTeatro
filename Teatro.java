@@ -1,3 +1,5 @@
+/*Guilherme Gomes Pinho - 10755529
+Moabe Guedes - 10748053 */
 import java.io.BufferedReader;
 import java.io.FileReader;
 
