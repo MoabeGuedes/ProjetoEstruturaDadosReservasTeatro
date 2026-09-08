@@ -7,13 +7,12 @@ public class Espetaculo{
     private char[][] assentos;
 
 
-    public Espetaculo(int codigo, String nome, String data, String horario, double preco, char[][] assentos){
+    public Espetaculo(int codigo, String nome, String data, String horario, double preco){
         this.codigo = codigo;
         this.nome = nome;
         this.data = data;
         this.horario = horario;
         this.preco = preco;
-        this.assentos = assentos;
         
     }
 
