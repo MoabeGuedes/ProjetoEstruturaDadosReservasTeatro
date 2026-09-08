@@ -21,9 +21,9 @@ public class Teatro {
             Espetaculo e1 = new Espetaculo(Integer.parseInt(vet[0]), vet[1], vet[2], vet[3], Double.parseDouble(vet[4]));
             espetaculos.add(cont, e1);
             cont++;
-
-
+            aux = linha.readLine();
         }
+        arquivo.close();
     }
 
 
