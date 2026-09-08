@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class Vetor<T> {
     public T[ ] A; // armazena os elementos do vetor
     public int capacity; // capacidade do vetor
