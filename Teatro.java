@@ -8,6 +8,7 @@ public class Teatro {
     private Vetor <Espetaculo> espetaculos;
     private Vetor <Reserva> reservas;
     Scanner entrada = new Scanner(System.in);
+    Boolean espetaculoCarregado = false;
 
     public Teatro() {
         this.espetaculos = new Vetor <Espetaculo>(20);
@@ -27,6 +28,7 @@ public class Teatro {
             cont++;
             aux = linha.readLine();
         }
+        espetaculoCarregado = true;
         arquivo.close();
     }
 
@@ -46,7 +48,7 @@ public class Teatro {
             System.out.print("Selecione uma opção: ");
 
             while (entrada.hasNextInt() == false) {
-                System.out.println("Opção inválida. Digite um número de 1 a 3.");
+                System.out.println("Opção inválida. Digite um número de 1 a 7.");
                 entrada.next();
             }
             selecaoMenu = entrada.nextInt();
@@ -60,21 +62,42 @@ public class Teatro {
                     break;
 
                 case 2:
+                    if (espetaculoCarregado == false) {
+                        System.out.println("É necessário carregar os espetáculos antes de acessar essa opção.");
+                        break;
+                    }
                     exibirEspetaculos();
                     break;
 
                 case 3:
+                    if (espetaculoCarregado == false) {
+                        System.out.println("É necessário carregar os espetáculos antes de acessar essa opção.");
+                        break;
+                    }
                     fazerReserva();
                     break;
 
                 case 4:
+                    if (espetaculoCarregado == false) {
+                        System.out.println("É necessário carregar os espetáculos antes de acessar essa opção.");
+                        break;
+                    }
                     consultarMapaAssentos();
                     break;
+
                 case 5:
+                    if (espetaculoCarregado == false) {
+                        System.out.println("É necessário carregar os espetáculos antes de acessar essa opção.");
+                        break;
+                    }
                     consultarReserva();
                     break;
 
                 case 6:
+                    if (espetaculoCarregado == false) {
+                        System.out.println("É necessário carregar os espetáculos antes de acessar essa opção.");
+                        break;
+                    }
                     estatisticas();
                     break;
 
@@ -98,6 +121,12 @@ public class Teatro {
         }
         return false;
     }
+
+    public void exibirEspetaculos() throws Exception {
+        for (int i = 0; i < espetaculos.size(); i++) {
+            System.out.println(espetaculos.get(i).toString());
+    }
+}
 
     public void solicitarReserva() throws Exception { 
         String CPF, nome;
@@ -129,5 +158,17 @@ public class Teatro {
         return reservas;
     }
 
+    //implementar futuramente (pro menu nao dar erro por enquanto)
+    public void consultarMapaAssentos() {
+
+    }
+
+    public void consultarReserva() {
+        
+    }
+
+    public void estatisticas() {
+
+    }
 
 }

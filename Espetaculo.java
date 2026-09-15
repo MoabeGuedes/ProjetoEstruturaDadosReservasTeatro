@@ -25,6 +25,10 @@ public class Espetaculo{
     }
 
 
+    @Override
+    public String toString() {
+        return (codigo + " - " + nome + " " + data + " " + horario + " " + preco) ;
+    }
 
     //gets e sets
 
