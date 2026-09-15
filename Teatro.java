@@ -9,18 +9,18 @@ public class Teatro {
     private Vetor <Reserva> reservas;
     Scanner entrada = new Scanner(System.in);
 
-    public Teatro(Vetor<Espetaculo> espetaculos, Vetor<Reserva> reservas) {
-        espetaculos = new Vetor <Espetaculo>(20);
-        reservas = new Vetor <Reserva>(800);
+    public Teatro() {
+        this.espetaculos = new Vetor <Espetaculo>(20);
+        this.reservas = new Vetor <Reserva>(800);
     }
 
 
     public void carregaTXT() throws Exception {
-        FileReader arquivo = new FileReader("espetaculo.txt");
+        FileReader arquivo = new FileReader("dadosEspetaculos.txt");
         BufferedReader linha = new BufferedReader(arquivo);
         String aux = linha.readLine();
         int cont = 0;
-        while (linha != null) {
+        while (aux != null) {
             String[] vet = aux.split(";");
             Espetaculo e1 = new Espetaculo(Integer.parseInt(vet[0]), vet[1], vet[2], vet[3], Double.parseDouble(vet[4]));
             espetaculos.add(cont, e1);
@@ -100,9 +100,8 @@ public class Teatro {
     }
 
     public void solicitarReserva() throws Exception { 
-        
-
-
+        String CPF, nome;
+        int qtdeIngressos;
     }
 
 
