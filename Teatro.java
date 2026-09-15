@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Teatro {
     private Vetor <Espetaculo> espetaculos;
     private Vetor <Reserva> reservas;
+    Scanner entrada = new Scanner(System.in);
 
     public Teatro(Vetor<Espetaculo> espetaculos, Vetor<Reserva> reservas) {
         espetaculos = new Vetor <Espetaculo>(20);
