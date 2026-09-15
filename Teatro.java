@@ -112,6 +112,13 @@ public class Teatro {
         } while (selecaoMenu != 3);
     }
 
+
+    public void exibirEspetaculos() throws Exception {
+        for (int i = 0; i < espetaculos.size(); i++) {
+            System.out.println(espetaculos.get(i).toString());
+        }
+    }
+    
     public boolean buscarEspetaculos(int codigo) throws Exception {
         for (int i = 0; i < espetaculos.size(); i++) {
             Espetaculo s = espetaculos.get(i);
@@ -122,19 +129,45 @@ public class Teatro {
         return false;
     }
 
-    public void exibirEspetaculos() throws Exception {
-        for (int i = 0; i < espetaculos.size(); i++) {
-            System.out.println(espetaculos.get(i).toString());
-    }
-}
-
     public void solicitarReserva() throws Exception { 
-        String CPF, nome;
+        String cpf, nome;
         int qtdeIngressos;
+        do{
+            System.out.println("Digite o CPF: ");
+            cpf = entrada.nextLine();
+            if (cpf.length() != 11) {
+                System.out.println("CPF inválido. O CPF deve conter 11 dígitos.");
+            }
+            System.out.println("Digite o nome: ");
+            nome = entrada.nextLine();
+            if (nome.length() < 3) {
+                System.out.println("Nome inválido. O nome deve conter pelo menos 3 caracteres.");
+            }
+        
+            System.out.println("Digite a quantidade de ingressos (máximo 4): ");
+            qtdeIngressos = entrada.nextInt();
+            entrada.nextLine();
+            if (qtdeIngressos > 4) {
+                System.out.println("Quantidade de ingressos inválida. O máximo permitido é 4.");
+            }
+            if (qtdeIngressos < 1) {
+                System.out.println("Quantidade de ingressos inválida. O mínimo permitido é 1.");
+            }
+        } while (qtdeIngressos > 4 || qtdeIngressos < 1 || cpf.length() != 11 || nome.length() < 3);
+
+        
     }
 
 
-
+    public int buscarPosicaoEspetaculo(int codigo) throws Exception {
+        for (int i = 0; i < espetaculos.size(); i++) {
+            Espetaculo s = espetaculos.get(i);
+            if (codigo == s.getCodigo()) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
 
 
@@ -142,13 +175,16 @@ public class Teatro {
         System.out.println("Digite o código do espetáculo que deseja reservar: ");
         int codigo = entrada.nextInt();
         boolean existe = buscarEspetaculos(codigo);
+        int posicao = buscarPosicaoEspetaculo(codigo);
+
         if (existe) {
             System.out.println("Espetáculo encontrado. Realizando reserva...");
-            
+            solicitarReserva();
         } else {
             System.out.println("Espetáculo não encontrado.");
         }
     }
+
 
     public Vetor<Espetaculo> getEspetaculos() {
         return espetaculos;
