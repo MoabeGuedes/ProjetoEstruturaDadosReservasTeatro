@@ -30,7 +30,7 @@ public class Teatro {
         arquivo.close();
     }
 
-    public void exibirMenu() {
+    public void exibirMenu() throws Exception {
         int selecaoMenu;
 
         do {
@@ -60,31 +60,25 @@ public class Teatro {
                     break;
 
                 case 2:
-                    System.out.println("1 - Passageiro | 2 - Motorista");
-                    while (entrada.hasNextInt() == false) {
-                        System.out.println("Opção inválida. Digite 1 ou 2.");
-                        entrada.next();
-                    }
-                    int tipo = entrada.nextInt();
-                    entrada.nextLine();
-                    if (tipo == 1) {
-                        Passageiro passageiroLogado = gerUsuarios.logarPassageiro(entrada);
-                        if (passageiroLogado != null) {
-                            exibirMenuPassageiro(entrada, passageiroLogado);
-                        }
-                    } else if (tipo == 2) {
-                        Motorista motoristaLogado = gerUsuarios.logarMotorista(entrada);
-                        if (motoristaLogado != null) {
-                            exibirMenuMotorista(entrada, motoristaLogado);
-                        }
-                    } else {
-                        System.out.println(
-                                "Tipo de conta inválido. Tente novamente.\n"
-                        );
-                    }
+                    exibirEspetaculos();
                     break;
 
                 case 3:
+                    fazerReserva();
+                    break;
+
+                case 4:
+                    consultarMapaAssentos();
+                    break;
+                case 5:
+                    consultarReserva();
+                    break;
+
+                case 6:
+                    estatisticas();
+                    break;
+
+                case 7:
                     System.out.println("Saindo...");
                     break;
 
