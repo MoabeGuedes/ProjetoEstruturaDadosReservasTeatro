@@ -89,6 +89,38 @@ public class Teatro {
         } while (selecaoMenu != 3);
     }
 
+    public boolean buscarEspetaculos(int codigo) throws Exception {
+        for (int i = 0; i < espetaculos.size(); i++) {
+            Espetaculo s = espetaculos.get(i);
+            if (codigo == s.getCodigo()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void solicitarReserva() throws Exception { 
+        
+
+
+    }
+
+
+
+
+
+
+    public void fazerReserva() throws Exception{
+        System.out.println("Digite o código do espetáculo que deseja reservar: ");
+        int codigo = entrada.nextInt();
+        boolean existe = buscarEspetaculos(codigo);
+        if (existe) {
+            System.out.println("Espetáculo encontrado. Realizando reserva...");
+            
+        } else {
+            System.out.println("Espetáculo não encontrado.");
+        }
+    }
 
     public Vetor<Espetaculo> getEspetaculos() {
         return espetaculos;
