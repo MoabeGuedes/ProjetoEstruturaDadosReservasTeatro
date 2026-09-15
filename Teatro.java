@@ -102,14 +102,14 @@ public class Teatro {
                     break;
 
                 case 7:
-                    System.out.println("Saindo...");
+                    System.out.println("Grupo: Guilherme Pinho - Moabe Guedes\nSistema Finaliado");
                     break;
 
                 default:
                     System.out.println("Opção inválida. Tente novamente.\n");
             }
 
-        } while (selecaoMenu != 3);
+        } while (selecaoMenu != 7);
     }
 
 
@@ -185,6 +185,14 @@ public class Teatro {
         }
     }
 
+    /*Finalizar na proxima aula 22
+        public void exibirAssentos() {
+            for (int i = 0; i<espetaculos.getAssentos.length; i++) {
+                for (int j = 0; j<assentos[i].length; j++) {
+                    System.out.println(assentos[i][j]);
+                }
+            }
+        }*/
 
     public Vetor<Espetaculo> getEspetaculos() {
         return espetaculos;
