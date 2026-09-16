@@ -129,7 +129,7 @@ public class Teatro {
         return false;
     }
 
-    public void solicitarReserva() throws Exception { 
+    public Reserva solicitarReserva(Espetaculo espetaculo) throws Exception { 
         String cpf, nome;
         int qtdeIngressos;
         do{
@@ -155,7 +155,19 @@ public class Teatro {
             }
         } while (qtdeIngressos > 4 || qtdeIngressos < 1 || cpf.length() != 11 || nome.length() < 3);
 
-        
+        exibirAssentos(espetaculo);
+        //verificar se os assentos estão disponíveis e marcar como ocupados fazer dps
+        System.out.println("Digite os assentos desejados, um de cada vez (ex: A1, B2, C3): ");
+        String[] assentos = new String[qtdeIngressos];
+        for (int i = 0; i < qtdeIngressos; i++) {
+            assentos[i] = entrada.nextLine();
+            for (int j = 0)
+        }
+
+
+
+
+        return new Reserva(cpf, nome, espetaculo, qtdeIngressos, assentos);
     }
 
 
@@ -179,21 +191,35 @@ public class Teatro {
 
         if (existe) {
             System.out.println("Espetáculo encontrado. Realizando reserva...");
-            solicitarReserva();
+            solicitarReserva(espetaculos.get(posicao));
+
         } else {
             System.out.println("Espetáculo não encontrado.");
         }
     }
 
-    /*Finalizar na proxima aula 22
-        public void exibirAssentos() {
-            for (int i = 0; i<espetaculos.getAssentos.length; i++) {
-                for (int j = 0; j<assentos[i].length; j++) {
-                    System.out.println(assentos[i][j]);
+        public void exibirAssentos(Espetaculo espetaculo) {
+        char[][] a = espetaculo.getAssentos();
+        char[] letras = {'A', 'B', 'C', 'D', 'E'};
+
+        System.out.println("   1 2 3 4 5");
+
+        for (int i = 0; i < 5; i++) {
+            System.out.print(letras[i] + "  ");
+            for (int j = 0; j < 5; j++) {
+                System.out.print(a[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+        /*public void exibirAssentos(Espetaculo espetaculo) {
+            for (int i = 0; i<espetaculo.getAssentos().length; i++) {
+                for (int j = 0; j<espetaculo.getAssentos()[i].length; j++) {
+                    System.out.println(espetaculo.getAssentos()[i][j]);
                 }
             }
-        }*/
-
+        }
+            */
     public Vetor<Espetaculo> getEspetaculos() {
         return espetaculos;
     }
