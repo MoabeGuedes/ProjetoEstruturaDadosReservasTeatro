@@ -207,9 +207,10 @@ public class Teatro {
             }
         }
 
+        Reserva reserva = new Reserva(cpf, nome, espetaculo, qtdeIngressos, assentos);
+        reservas.add(reservas.size(), reserva);
 
-
-        return new Reserva(cpf, nome, espetaculo, qtdeIngressos, assentos);
+        return reserva;
     }
 
 
@@ -277,11 +278,27 @@ public class Teatro {
         return reservas;
     }
 
-    //implementar futuramente (pro menu nao dar erro por enquanto)
-    public void consultarMapaAssentos() {
+    
+    public void consultarMapaAssentos() throws Exception {
+        System.out.println("Digite o código do espetáculo que deseja consultar o mapa de assentos: ");
+        while (!entrada.hasNextInt()) {
+            System.out.println("Entrada inválida. Digite apenas números.");
+            entrada.nextLine();
+        }
+        int codigo = entrada.nextInt();
+        entrada.nextLine();
+        boolean existe = buscarEspetaculos(codigo);
+        int posicao = buscarPosicaoEspetaculo(codigo);
 
+        if (existe) {
+            exibirAssentos(espetaculos.get(posicao));
+        } else {
+            System.out.println("Espetáculo não encontrado.");
+        }
     }
 
+    //implementar futuramente (pro menu nao dar erro por enquanto)
+    
     public void consultarReserva() {
         
     }
