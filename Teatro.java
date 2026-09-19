@@ -132,18 +132,24 @@ public class Teatro {
     public Reserva solicitarReserva(Espetaculo espetaculo) throws Exception { 
         String cpf, nome;
         int qtdeIngressos;
-        do{
+        do {
             System.out.println("Digite o CPF: ");
             cpf = entrada.nextLine();
             if (cpf.length() != 11) {
                 System.out.println("CPF inválido. O CPF deve conter 11 dígitos.");
             }
+            
+        } while (cpf.length() != 11);
+
+        do {
             System.out.println("Digite o nome: ");
             nome = entrada.nextLine();
             if (nome.length() < 3) {
                 System.out.println("Nome inválido. O nome deve conter pelo menos 3 caracteres.");
             }
-        
+        } while (nome.length() < 3);
+
+        do {
             System.out.println("Digite a quantidade de ingressos (máximo 4): ");
             qtdeIngressos = entrada.nextInt();
             entrada.nextLine();
@@ -153,17 +159,53 @@ public class Teatro {
             if (qtdeIngressos < 1) {
                 System.out.println("Quantidade de ingressos inválida. O mínimo permitido é 1.");
             }
-        } while (qtdeIngressos > 4 || qtdeIngressos < 1 || cpf.length() != 11 || nome.length() < 3);
+        } while (qtdeIngressos > 4 || qtdeIngressos < 1);
 
         exibirAssentos(espetaculo);
+
         //verificar se os assentos estão disponíveis e marcar como ocupados fazer dps
+
         System.out.println("Digite os assentos desejados, um de cada vez (ex: A1, B2, C3): ");
         String[] assentos = new String[qtdeIngressos];
-        for (int i = 0; i < qtdeIngressos; i++) {
-            assentos[i] = entrada.nextLine();
-            for (int j = 0)
-        }
+        char[][] mapaAssentos = espetaculo.getAssentos();
+        char[] letras = {'A', 'B', 'C', 'D', 'E'};
 
+        for (int i = 0; i < qtdeIngressos; i++) {
+            do {
+                assentos[i] = entrada.nextLine().toUpperCase();
+
+            if (assentos[i].length() != 2
+                || assentos[i].charAt(0) < 'A'
+                || assentos[i].charAt(0) > 'E'
+                || assentos[i].charAt(1) < '1'
+                || assentos[i].charAt(1) > '5') {
+
+                System.out.println("Assento inválido. Digite novamente (ex: A1, B2, C3): ");
+            }
+
+            } while (assentos[i].length() != 2
+                    || assentos[i].charAt(0) < 'A'
+                    || assentos[i].charAt(0) > 'E'
+                    || assentos[i].charAt(1) < '1'
+                    || assentos[i].charAt(1) > '5');
+
+            for (int j = 0; j < letras.length; j++) {
+                for (int k = 0; k < 5; k++) {
+                    if (assentos[i].equals(letras[j] + Integer.toString(k + 1))) {
+                        if (mapaAssentos[j][k] == 'X') {
+                            System.out.println("Assento " + assentos[i] + " já está ocupado. Escolha outro assento.");
+                            if (i > 0) {
+                                i--;
+                            }
+                        } else {
+                            mapaAssentos[j][k] = 'X';
+                            System.out.println("Assento " + assentos[i] + " reservado com sucesso.");
+                        }
+                    }
+                    
+                }
+            }
+        }
 
 
 
@@ -185,7 +227,14 @@ public class Teatro {
 
     public void fazerReserva() throws Exception{
         System.out.println("Digite o código do espetáculo que deseja reservar: ");
+        while (!entrada.hasNextInt()) {
+            System.out.println("Entrada inválida. Digite apenas números.");
+            entrada.nextLine();
+        }
+
         int codigo = entrada.nextInt();
+        
+        entrada.nextLine();
         boolean existe = buscarEspetaculos(codigo);
         int posicao = buscarPosicaoEspetaculo(codigo);
 
