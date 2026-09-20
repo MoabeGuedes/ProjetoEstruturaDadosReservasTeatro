@@ -36,7 +36,7 @@ public class Teatro {
         int selecaoMenu;
 
         do {
-            System.out.println("=== Teatro Mack ===");
+            System.out.println("\n=== Teatro Mack ===");
             System.out.println("1. Carregar espetáculos");
             System.out.println("2. Exibir espetáculos");
             System.out.println("3. Fazer reserva");
@@ -44,7 +44,7 @@ public class Teatro {
             System.out.println("5. Consultar reserva");
             System.out.println("6. Estatísticas");
             System.out.println("7. Sair");
-            System.out.println("========================================");
+            System.out.println("========================================\n");
             System.out.print("Selecione uma opção: ");
 
             while (entrada.hasNextInt() == false) {
@@ -102,7 +102,7 @@ public class Teatro {
                     break;
 
                 case 7:
-                    System.out.println("Grupo: Guilherme Pinho - Moabe Guedes\nSistema Finaliado");
+                    System.out.println("Grupo: Guilherme Pinho - Moabe Guedes\nSistema Finalizado");
                     break;
 
                 default:
@@ -270,13 +270,7 @@ public class Teatro {
             }
         }
             */
-    public Vetor<Espetaculo> getEspetaculos() {
-        return espetaculos;
-    }
 
-    public Vetor<Reserva> getReservas() {
-        return reservas;
-    }
 
     
     public void consultarMapaAssentos() throws Exception {
@@ -297,10 +291,22 @@ public class Teatro {
         }
     }
 
+    //getters e setters
+        public Vetor<Espetaculo> getEspetaculos() {
+        return espetaculos;
+    }
+
+    public Vetor<Reserva> getReservas() {
+        return reservas;
+    }
+
     //implementar futuramente (pro menu nao dar erro por enquanto)
     
-    public void consultarReserva() {
-        
+    public void consultarReserva() throws Exception {
+        System.out.println("Reservas cadastradas: ");
+        for (int i = 0; i < reservas.size(); i++) {
+            System.out.println(reservas.get(i).toString());
+        }
     }
 
     public void estatisticas() {

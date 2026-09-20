@@ -1,5 +1,8 @@
 /*Guilherme Gomes Pinho - 10755529
 Moabe Guedes - 10748053 */
+
+import java.util.Arrays;
+
 public class Reserva {
     private String CPF;
     private String nome;
@@ -15,8 +18,11 @@ public class Reserva {
         this.assentos = assentos;
     }
 
+    public String assentosToString() {
+        return Arrays.toString(assentos);
+    }
 
     public String toString() {
-        return ("CPF: " + CPF + " - Nome: " + nome + " - Espetáculo:" + espetaculo + " - Quantidade de Ingressos: " + qtdeIngressos + " - Assentos: " + assentos);
+        return ("CPF: " + CPF + " - Nome: " + nome + "\nEspetáculo: " + espetaculo + "\nQuantidade de Ingressos: " + qtdeIngressos + " - Assentos: " + assentosToString());
     }
 }

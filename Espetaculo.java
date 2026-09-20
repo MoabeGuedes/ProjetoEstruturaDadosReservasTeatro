@@ -30,7 +30,7 @@ public class Espetaculo{
         return (codigo + " - " + nome + " " + data + " " + horario + " " + preco) ;
     }
 
-    //gets e sets
+    //getters e setters
 
     public int getCodigo() {
         return codigo;
