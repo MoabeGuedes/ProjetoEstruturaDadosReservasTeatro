@@ -303,11 +303,26 @@ public class Teatro {
     //implementar futuramente (pro menu nao dar erro por enquanto)
     
     public void consultarReserva() throws Exception {
-        System.out.println("Reservas cadastradas: ");
+        System.out.println("Digite o CPF da reserva que deseja consultar: ");
+        String cpf = entrada.nextLine();
+        boolean reservaEncontrada = false;
         for (int i = 0; i < reservas.size(); i++) {
-            System.out.println(reservas.get(i).toString());
+            Reserva reservaAtiva = reservas.get(i);
+            if (reservaAtiva.getCPF().equals(cpf)) {
+                System.out.println("\nReserva encontrada:");
+                System.out.println("Cliente: " + reservaAtiva.getNome());
+                System.out.println("Espetáculo: " + reservaAtiva.getEspetaculo());
+                System.out.println("Assentos reservados: " + reservaAtiva.assentosToString());
+                System.out.println("Valor total: R$" + (reservaAtiva.getEspetaculo().getPreco() * reservaAtiva.getQtdeIngressos()));
+                reservaEncontrada = true;
+                break;
+            }
+        }
+        if (!reservaEncontrada) {
+            System.out.println("Reserva não encontrada para o CPF informado.");
         }
     }
+
 
     public void estatisticas() {
 

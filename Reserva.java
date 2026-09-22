@@ -25,4 +25,20 @@ public class Reserva {
     public String toString() {
         return ("CPF: " + CPF + " - Nome: " + nome + "\nEspetáculo: " + espetaculo + "\nQuantidade de Ingressos: " + qtdeIngressos + " - Assentos: " + assentosToString());
     }
+
+    public String getCPF() {
+        return CPF;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Espetaculo getEspetaculo() {
+        return espetaculo;
+    }
+
+    public int getQtdeIngressos() {
+        return qtdeIngressos;
+    }
 }
