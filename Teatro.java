@@ -163,7 +163,6 @@ public class Teatro {
 
         exibirAssentos(espetaculo);
 
-        //verificar se os assentos estão disponíveis e marcar como ocupados fazer dps
 
         System.out.println("Digite os assentos desejados, um de cada vez (ex: A1, B2, C3): ");
         String[] assentos = new String[qtdeIngressos];
@@ -171,41 +170,35 @@ public class Teatro {
         char[] letras = {'A', 'B', 'C', 'D', 'E'};
 
         for (int i = 0; i < qtdeIngressos; i++) {
+            boolean assentoValido;
             
             do {
+                assentoValido = true;
                 assentos[i] = entrada.nextLine().toUpperCase();
 
-            if (assentos[i].length() != 2
-                || assentos[i].charAt(0) < 'A'
-                || assentos[i].charAt(0) > 'E'
-                || assentos[i].charAt(1) < '1'
-                || assentos[i].charAt(1) > '8') {
-
-                System.out.println("Assento inválido. Digite novamente (ex: A1, B2, C3): ");
-            }
-
-            } while (assentos[i].length() != 2
+                if (assentos[i].length() != 2
                     || assentos[i].charAt(0) < 'A'
                     || assentos[i].charAt(0) > 'E'
                     || assentos[i].charAt(1) < '1'
-                    || assentos[i].charAt(1) > '8');
+                    || assentos[i].charAt(1) > '8') {
 
-            for (int j = 0; j < letras.length; j++) {
-                for (int k = 0; k < 8; k++) {
-                    if (assentos[i].equals(letras[j] + Integer.toString(k + 1))) {
-                        if (mapaAssentos[j][k] == 'X') {
-                            System.out.println("Assento " + assentos[i] + " já está ocupado. Escolha outro assento.");
-                            if (i > 0) {
-                                i--;
-                            }
-                        } else {
-                            mapaAssentos[j][k] = 'X';
-                            System.out.println("Assento " + assentos[i] + " reservado com sucesso.");
-                        }
+                    System.out.println("Assento inválido. Digite novamente (ex: A1, B2, C3): ");
+                    assentoValido = false;
+                } else {
+                    int linha = assentos[i].charAt(0) - 'A';
+                    int coluna = assentos[i].charAt(1) - '1';
+
+                    if (mapaAssentos[linha][coluna] == 'X') {
+                        System.out.println("Assento " + assentos[i] + " já está ocupado. Escolha outro.");
+                        assentoValido = false;
                     }
-                    
                 }
-            }
+            } while (!assentoValido);
+
+            int linha = assentos[i].charAt(0) - 'A';
+            int coluna = assentos[i].charAt(1) - '1';
+            mapaAssentos[linha][coluna] = 'X';
+            System.out.println("Assento " + assentos[i] + " reservado com sucesso.");
         }
 
         System.out.println("\nReserva realizada com sucesso!\n");
