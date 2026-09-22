@@ -317,7 +317,7 @@ public class Teatro {
                 System.out.println("Assentos reservados: " + reservaAtiva.assentosToString());
                 System.out.println("Valor total: R$" + (reservaAtiva.getEspetaculo().getPreco() * reservaAtiva.getQtdeIngressos()));
                 reservaEncontrada = true;
-                break;
+
             }
         }
         if (!reservaEncontrada) {
@@ -384,7 +384,7 @@ public class Teatro {
         }
 
         if (espetaculoMaiorFaturamento != null) {
-            System.out.println("Espetáculo com maior faturamento: " + espetaculoMaiorFaturamento.getNome() + " - Faturamento: R$" + maiorFaturamento);
+            System.out.println("\nEspetáculo com maior faturamento: " + espetaculoMaiorFaturamento.getNome() + " - Faturamento: R$" + maiorFaturamento);
         } else {
             System.out.println("Nenhum espetáculo cadastrado para calcular o faturamento.");
         }
