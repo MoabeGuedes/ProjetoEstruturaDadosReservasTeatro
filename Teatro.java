@@ -178,7 +178,7 @@ public class Teatro {
                 || assentos[i].charAt(0) < 'A'
                 || assentos[i].charAt(0) > 'E'
                 || assentos[i].charAt(1) < '1'
-                || assentos[i].charAt(1) > '5') {
+                || assentos[i].charAt(1) > '8') {
 
                 System.out.println("Assento inválido. Digite novamente (ex: A1, B2, C3): ");
             }
@@ -187,10 +187,10 @@ public class Teatro {
                     || assentos[i].charAt(0) < 'A'
                     || assentos[i].charAt(0) > 'E'
                     || assentos[i].charAt(1) < '1'
-                    || assentos[i].charAt(1) > '5');
+                    || assentos[i].charAt(1) > '8');
 
             for (int j = 0; j < letras.length; j++) {
-                for (int k = 0; k < 5; k++) {
+                for (int k = 0; k < 8; k++) {
                     if (assentos[i].equals(letras[j] + Integer.toString(k + 1))) {
                         if (mapaAssentos[j][k] == 'X') {
                             System.out.println("Assento " + assentos[i] + " já está ocupado. Escolha outro assento.");
@@ -206,6 +206,15 @@ public class Teatro {
                 }
             }
         }
+
+        System.out.println("\nReserva realizada com sucesso!\n");
+        System.out.println("Resumo da reserva:");
+        System.out.println("Espetáculo: " + espetaculo.getNome());
+        System.out.println("Assentos reservados: ");
+        for (int i = 0; i < qtdeIngressos; i++) {
+            System.out.print(assentos[i] + " ");
+        }
+        System.out.println("\nValor total: R$" + (espetaculo.getPreco() * qtdeIngressos));
 
         Reserva reserva = new Reserva(cpf, nome, espetaculo, qtdeIngressos, assentos);
         reservas.add(reservas.size(), reserva);
@@ -240,7 +249,8 @@ public class Teatro {
         int posicao = buscarPosicaoEspetaculo(codigo);
 
         if (existe) {
-            System.out.println("Espetáculo encontrado. Realizando reserva...");
+            System.out.println("Espetáculo encontrado:");
+            System.out.println(espetaculos.get(posicao).toString());
             solicitarReserva(espetaculos.get(posicao));
 
         } else {
@@ -252,25 +262,16 @@ public class Teatro {
         char[][] a = espetaculo.getAssentos();
         char[] letras = {'A', 'B', 'C', 'D', 'E'};
 
-        System.out.println("   1 2 3 4 5");
+        System.out.println("   1 2 3 4 5 6 7 8");
 
         for (int i = 0; i < 5; i++) {
             System.out.print(letras[i] + "  ");
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 8; j++) {
                 System.out.print(a[i][j] + " ");
             }
             System.out.println();
         }
     }
-        /*public void exibirAssentos(Espetaculo espetaculo) {
-            for (int i = 0; i<espetaculo.getAssentos().length; i++) {
-                for (int j = 0; j<espetaculo.getAssentos()[i].length; j++) {
-                    System.out.println(espetaculo.getAssentos()[i][j]);
-                }
-            }
-        }
-            */
-
 
     
     public void consultarMapaAssentos() throws Exception {
@@ -300,7 +301,7 @@ public class Teatro {
         return reservas;
     }
 
-    //implementar futuramente (pro menu nao dar erro por enquanto)
+
     
     public void consultarReserva() throws Exception {
         System.out.println("Digite o CPF da reserva que deseja consultar: ");
@@ -323,7 +324,7 @@ public class Teatro {
         }
     }
 
-
+    //implementar futuramente (pro menu nao dar erro por enquanto)
     public void estatisticas() {
 
     }
