@@ -326,8 +326,17 @@ public class Teatro {
     }
 
     public void estatisticas() throws Exception {
+
+        if (espetaculos == null || espetaculos.size() == 0) {
+            System.out.println("Nenhum espetáculo carregado para calcular estatísticas.");
+            return;
+        }
+
+
         System.out.println("Estatísticas:");
         mediaIngressosPorReserva();
+        maiorFaturamento();
+
 
     }
 
@@ -358,5 +367,43 @@ public class Teatro {
             return 0.0;
         }
         return totalIngressos / contReservas;
+    }
+
+    public double maiorFaturamento() throws Exception {
+        double maiorFaturamento = 0;
+        Espetaculo espetaculoMaiorFaturamento = null;
+
+        for (int i = 0; i < espetaculos.size(); i++) {
+            Espetaculo espetaculoAtual = espetaculos.get(i);
+            double faturamentoAtual = calcularFaturamento(espetaculoAtual);
+
+            if (faturamentoAtual > maiorFaturamento) {
+                maiorFaturamento = faturamentoAtual;
+                espetaculoMaiorFaturamento = espetaculoAtual;
+            }
+        }
+
+        if (espetaculoMaiorFaturamento != null) {
+            System.out.println("Espetáculo com maior faturamento: " + espetaculoMaiorFaturamento.getNome() + " - Faturamento: R$" + maiorFaturamento);
+        } else {
+            System.out.println("Nenhum espetáculo cadastrado para calcular o faturamento.");
+        }
+
+        return maiorFaturamento;
+    }
+
+    public double calcularFaturamento(Espetaculo espetaculo) throws Exception {
+        double faturamento = 0;
+        char[][] assentos = espetaculo.getAssentos();
+
+        for (int i = 0; i < assentos.length; i++) {
+            for (int j = 0; j < assentos[i].length; j++) {
+                if (assentos[i][j] == 'X') {
+                    faturamento += espetaculo.getPreco();
+                }
+            }
+        }
+
+        return faturamento;
     }
 }
