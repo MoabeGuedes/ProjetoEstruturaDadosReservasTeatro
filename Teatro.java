@@ -171,6 +171,7 @@ public class Teatro {
         char[] letras = {'A', 'B', 'C', 'D', 'E'};
 
         for (int i = 0; i < qtdeIngressos; i++) {
+            
             do {
                 assentos[i] = entrada.nextLine().toUpperCase();
 
@@ -324,9 +325,38 @@ public class Teatro {
         }
     }
 
-    //implementar futuramente (pro menu nao dar erro por enquanto)
-    public void estatisticas() {
+    public void estatisticas() throws Exception {
+        System.out.println("Estatísticas:");
+        mediaIngressosPorReserva();
 
     }
 
+    public void mediaIngressosPorReserva() throws Exception {
+        System.out.println("Média de ingressos vendidos por reserva:");
+        for (int i = 0; i < espetaculos.size(); i++) {
+            Espetaculo espetaculo = espetaculos.get(i);
+            double mediaIngressos = calcularMediaIngressos(espetaculo.getCodigo());
+            System.out.println(espetaculo.getNome() + ": " + mediaIngressos);
+        }
+    }
+
+    public double calcularMediaIngressos(int codigo) throws Exception {
+        if (reservas.isEmpty()) {
+            return 0.0;
+        }
+        double totalIngressos = 0;
+        double contReservas = 0;
+        for (int i = 0; i < reservas.size(); i++) {
+            Reserva reservaAtiva = reservas.get(i);
+            if (reservaAtiva.getEspetaculo().getCodigo() == codigo) {
+                totalIngressos += reservaAtiva.getQtdeIngressos();
+                contReservas++;
+            }
+        }
+
+        if (contReservas == 0) {
+            return 0.0;
+        }
+        return totalIngressos / contReservas;
+    }
 }
