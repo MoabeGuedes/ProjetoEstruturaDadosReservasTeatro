@@ -57,8 +57,10 @@ public class Teatro {
             switch (selecaoMenu) {
 
                 case 1:
-                    carregaTXT();
-                    System.out.println("Espetáculos Carregados");
+                    if (espetaculoCarregado == false) {
+                        carregaTXT();
+                        System.out.println("Espetáculos Carregados");
+                    }
                     break;
 
                 case 2:
@@ -129,9 +131,27 @@ public class Teatro {
         return false;
     }
 
+    private int contarAssentosDisponiveis(Espetaculo espetaculo) {
+        int disponiveis = 0;
+        for (char[] linha : espetaculo.getAssentos()) {
+            for (char assento : linha) {
+                if (assento == 'L') {
+                    disponiveis++;
+                }
+            }
+        }
+        return disponiveis;
+    }
+
     public Reserva solicitarReserva(Espetaculo espetaculo) throws Exception { 
         String cpf, nome;
         int qtdeIngressos;
+        int assentosDisponiveis = contarAssentosDisponiveis(espetaculo);
+        if (assentosDisponiveis == 0) {
+            System.out.println("Sessão lotada. Não é possível fazer uma nova reserva.");
+            return null;
+        }
+
         do {
             System.out.println("Digite o CPF: ");
             cpf = entrada.nextLine();
@@ -150,21 +170,25 @@ public class Teatro {
         } while (nome.length() < 3);
 
         do {
-            System.out.println("Digite a quantidade de ingressos (máximo 4): ");
+            System.out.println("Digite a quantidade de ingressos (máximo 4 - " + assentosDisponiveis + " disponíveis): ");
+            while (!entrada.hasNextInt()) {
+                System.out.println("Entrada inválida. Digite uma quantidade numérica.");
+                entrada.nextLine();
+            }
             qtdeIngressos = entrada.nextInt();
             entrada.nextLine();
-            if (qtdeIngressos > 4) {
-                System.out.println("Quantidade de ingressos inválida. O máximo permitido é 4.");
+            if (qtdeIngressos > 4 || qtdeIngressos > assentosDisponiveis) {
+                System.out.println("Quantidade inválida. Máximo permitido: " + Math.min(4, assentosDisponiveis) + ".");
             }
             if (qtdeIngressos < 1) {
                 System.out.println("Quantidade de ingressos inválida. O mínimo permitido é 1.");
             }
-        } while (qtdeIngressos > 4 || qtdeIngressos < 1);
+        } while (qtdeIngressos > 4 || qtdeIngressos > assentosDisponiveis || qtdeIngressos < 1);
 
         exibirAssentos(espetaculo);
 
 
-        System.out.println("Digite os assentos desejados, um de cada vez (ex: A1, B2, C3): ");
+        
         String[] assentos = new String[qtdeIngressos];
         char[][] mapaAssentos = espetaculo.getAssentos();
         char[] letras = {'A', 'B', 'C', 'D', 'E'};
@@ -173,6 +197,7 @@ public class Teatro {
             boolean assentoValido;
             
             do {
+                System.out.println("Digite os assentos desejados, um de cada vez (ex: A1, B2, C3): ");
                 assentoValido = true;
                 assentos[i] = entrada.nextLine().toUpperCase();
 
@@ -208,7 +233,8 @@ public class Teatro {
         for (int i = 0; i < qtdeIngressos; i++) {
             System.out.print(assentos[i] + " ");
         }
-        System.out.println("\nValor total: R$" + (espetaculo.getPreco() * qtdeIngressos));
+        System.out.println("\nQuantidade: " + qtdeIngressos);
+        System.out.println("Valor total: R$" + (espetaculo.getPreco() * qtdeIngressos));
 
         Reserva reserva = new Reserva(cpf, nome, espetaculo, qtdeIngressos, assentos);
         reservas.add(reservas.size(), reserva);
@@ -235,6 +261,7 @@ public class Teatro {
             System.out.println("Entrada inválida. Digite apenas números.");
             entrada.nextLine();
         }
+        
 
         int codigo = entrada.nextInt();
         
@@ -321,7 +348,7 @@ public class Teatro {
     public void estatisticas() throws Exception {
 
         if (espetaculos == null || espetaculos.size() == 0) {
-            System.out.println("Nenhum espetáculo carregado para calcular estatísticas.");
+            System.out.println("Nenhum reserva realizada para calcular estatísticas.");
             return;
         }
 

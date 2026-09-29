@@ -27,7 +27,7 @@ public class Espetaculo{
 
     @Override
     public String toString() {
-        return (codigo + " - " + nome + " " + data + " " + horario + " " + preco) ;
+        return (codigo + " - " + nome + " - " + data + " - " + horario + " - " + preco) ;
     }
 
     //getters e setters
