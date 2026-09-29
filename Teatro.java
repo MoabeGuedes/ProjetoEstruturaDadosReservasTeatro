@@ -16,22 +16,7 @@ public class Teatro {
     }
 
 
-    public void carregaTXT() throws Exception {
-        FileReader arquivo = new FileReader("dadosEspetaculos.txt");
-        BufferedReader linha = new BufferedReader(arquivo);
-        String aux = linha.readLine();
-        int cont = 0;
-        while (aux != null) {
-            String[] vet = aux.split(";");
-            Espetaculo e1 = new Espetaculo(Integer.parseInt(vet[0]), vet[1], vet[2], vet[3], Double.parseDouble(vet[4]));
-            espetaculos.add(cont, e1);
-            cont++;
-            aux = linha.readLine();
-        }
-        espetaculoCarregado = true;
-        arquivo.close();
-    }
-
+    //Exibir Menu
     public void exibirMenu() throws Exception {
         int selecaoMenu;
 
@@ -115,12 +100,61 @@ public class Teatro {
     }
 
 
+
+    // Opção 1 - Carregar Espetáculos
+    public void carregaTXT() throws Exception {
+        FileReader arquivo = new FileReader("dadosEspetaculos.txt");
+        BufferedReader linha = new BufferedReader(arquivo);
+        String aux = linha.readLine();
+        int cont = 0;
+        while (aux != null) {
+            String[] vet = aux.split(";");
+            Espetaculo e1 = new Espetaculo(Integer.parseInt(vet[0]), vet[1], vet[2], vet[3], Double.parseDouble(vet[4]));
+            espetaculos.add(cont, e1);
+            cont++;
+            aux = linha.readLine();
+        }
+        espetaculoCarregado = true;
+        arquivo.close();
+    }
+
+
+
+    // Opção 2 - Exibir Espetáculos
     public void exibirEspetaculos() throws Exception {
         for (int i = 0; i < espetaculos.size(); i++) {
             System.out.println(espetaculos.get(i).toString());
         }
     }
     
+
+
+    // Opção 3 - Fazer Reserva (Chama buscarEspetaculos(), buscarPosicaoEspetaculo() e solicitarReserva())
+    public void fazerReserva() throws Exception{
+        System.out.println("Digite o código do espetáculo que deseja reservar: ");
+        while (!entrada.hasNextInt()) {
+            System.out.println("Entrada inválida. Digite apenas números.");
+            entrada.nextLine();
+        }
+        
+
+        int codigo = entrada.nextInt();
+        
+        entrada.nextLine();
+        boolean existe = buscarEspetaculos(codigo);
+        int posicao = buscarPosicaoEspetaculo(codigo);
+
+        if (existe) {
+            System.out.println("Espetáculo encontrado:");
+            System.out.println(espetaculos.get(posicao).toString());
+            solicitarReserva(espetaculos.get(posicao));
+
+        } else {
+            System.out.println("Espetáculo não encontrado.");
+        }
+    }
+
+    // 3.1 - Buscar Espetáculos
     public boolean buscarEspetaculos(int codigo) throws Exception {
         for (int i = 0; i < espetaculos.size(); i++) {
             Espetaculo s = espetaculos.get(i);
@@ -131,18 +165,18 @@ public class Teatro {
         return false;
     }
 
-    private int contarAssentosDisponiveis(Espetaculo espetaculo) {
-        int disponiveis = 0;
-        for (char[] linha : espetaculo.getAssentos()) {
-            for (char assento : linha) {
-                if (assento == 'L') {
-                    disponiveis++;
-                }
+    // 3.2 - Buscar Posição do Espetaculo
+    public int buscarPosicaoEspetaculo(int codigo) throws Exception {
+        for (int i = 0; i < espetaculos.size(); i++) {
+            Espetaculo s = espetaculos.get(i);
+            if (codigo == s.getCodigo()) {
+                return i;
             }
         }
-        return disponiveis;
+        return -1;
     }
 
+    // 3.3 - SolicitarReserva (Utiliza contarAssentosDisponiveis() e exibirAssentos())
     public Reserva solicitarReserva(Espetaculo espetaculo) throws Exception { 
         String cpf, nome;
         int qtdeIngressos;
@@ -186,12 +220,9 @@ public class Teatro {
         } while (qtdeIngressos > 4 || qtdeIngressos > assentosDisponiveis || qtdeIngressos < 1);
 
         exibirAssentos(espetaculo);
-
-
         
         String[] assentos = new String[qtdeIngressos];
         char[][] mapaAssentos = espetaculo.getAssentos();
-        char[] letras = {'A', 'B', 'C', 'D', 'E'};
 
         for (int i = 0; i < qtdeIngressos; i++) {
             boolean assentoValido;
@@ -242,59 +273,22 @@ public class Teatro {
         return reserva;
     }
 
-
-    public int buscarPosicaoEspetaculo(int codigo) throws Exception {
-        for (int i = 0; i < espetaculos.size(); i++) {
-            Espetaculo s = espetaculos.get(i);
-            if (codigo == s.getCodigo()) {
-                return i;
+    // 3.3.1 - Contar Assentos Disponíveis
+    private int contarAssentosDisponiveis(Espetaculo espetaculo) {
+        int disponiveis = 0;
+        for (char[] linha : espetaculo.getAssentos()) {
+            for (char assento : linha) {
+                if (assento == 'L') {
+                    disponiveis++;
+                }
             }
         }
-        return -1;
+        return disponiveis;
     }
 
 
 
-    public void fazerReserva() throws Exception{
-        System.out.println("Digite o código do espetáculo que deseja reservar: ");
-        while (!entrada.hasNextInt()) {
-            System.out.println("Entrada inválida. Digite apenas números.");
-            entrada.nextLine();
-        }
-        
-
-        int codigo = entrada.nextInt();
-        
-        entrada.nextLine();
-        boolean existe = buscarEspetaculos(codigo);
-        int posicao = buscarPosicaoEspetaculo(codigo);
-
-        if (existe) {
-            System.out.println("Espetáculo encontrado:");
-            System.out.println(espetaculos.get(posicao).toString());
-            solicitarReserva(espetaculos.get(posicao));
-
-        } else {
-            System.out.println("Espetáculo não encontrado.");
-        }
-    }
-
-        public void exibirAssentos(Espetaculo espetaculo) {
-        char[][] a = espetaculo.getAssentos();
-        char[] letras = {'A', 'B', 'C', 'D', 'E'};
-
-        System.out.println("   1 2 3 4 5 6 7 8");
-
-        for (int i = 0; i < 5; i++) {
-            System.out.print(letras[i] + "  ");
-            for (int j = 0; j < 8; j++) {
-                System.out.print(a[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    
+    // Opção 4 - Consultar Mapa de Assentos (Também chama buscarEspetaculos() e buscarPosicaoEspetaculos. Chama exibirAssentos)
     public void consultarMapaAssentos() throws Exception {
         System.out.println("Digite o código do espetáculo que deseja consultar o mapa de assentos: ");
         while (!entrada.hasNextInt()) {
@@ -313,17 +307,25 @@ public class Teatro {
         }
     }
 
-    //getters e setters
-        public Vetor<Espetaculo> getEspetaculos() {
-        return espetaculos;
-    }
+    // 4.1 - Exibir Assentos
+    public void exibirAssentos(Espetaculo espetaculo) {
+            
+        char[][] a = espetaculo.getAssentos();
+        char[] letras = {'A', 'B', 'C', 'D', 'E'};
+        System.out.println("   1 2 3 4 5 6 7 8");
 
-    public Vetor<Reserva> getReservas() {
-        return reservas;
+        for (int i = 0; i < 5; i++) {
+            System.out.print(letras[i] + "  ");
+            for (int j = 0; j < 8; j++) {
+                System.out.print(a[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
-
 
     
+
+    // Opção 5 - Consultar Reserva
     public void consultarReserva() throws Exception {
         System.out.println("Digite o CPF da reserva que deseja consultar: ");
         String cpf = entrada.nextLine();
@@ -344,7 +346,10 @@ public class Teatro {
             System.out.println("Reserva não encontrada para o CPF informado.");
         }
     }
+    
 
+
+    /// Opção 6 - Estatísticas
     public void estatisticas() throws Exception {
 
         if (espetaculos == null || espetaculos.size() == 0) {
@@ -360,6 +365,7 @@ public class Teatro {
 
     }
 
+    // 6.1 - Média de Ingressos por Reserva (Chama calcularMediaIngressos())
     public void mediaIngressosPorReserva() throws Exception {
         System.out.println("Média de ingressos vendidos por reserva:");
         for (int i = 0; i < espetaculos.size(); i++) {
@@ -369,6 +375,7 @@ public class Teatro {
         }
     }
 
+    // 6.1.1 - Calcular Média de Ingressos
     public double calcularMediaIngressos(int codigo) throws Exception {
         if (reservas.isEmpty()) {
             return 0.0;
@@ -389,6 +396,7 @@ public class Teatro {
         return totalIngressos / contReservas;
     }
 
+    // 6.2 - Maior Faturamento (Chama calcularFaturamento())
     public double maiorFaturamento() throws Exception {
         double maiorFaturamento = 0;
         Espetaculo espetaculoMaiorFaturamento = null;
@@ -412,6 +420,7 @@ public class Teatro {
         return maiorFaturamento;
     }
 
+    // 6.2.1 - Calcular Faturamento
     public double calcularFaturamento(Espetaculo espetaculo) throws Exception {
         double faturamento = 0;
         char[][] assentos = espetaculo.getAssentos();
@@ -426,4 +435,28 @@ public class Teatro {
 
         return faturamento;
     }
+
+
+    //getters e setters
+    public Vetor<Espetaculo> getEspetaculos() {
+        return espetaculos;
+    }
+
+    public Vetor<Reserva> getReservas() {
+        return reservas;
+    }
+
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 }
