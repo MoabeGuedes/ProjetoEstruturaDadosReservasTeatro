@@ -46,6 +46,9 @@ public class Teatro {
                         carregaTXT();
                         System.out.println("Espetáculos Carregados");
                     }
+                    if (espetaculoCarregado == true) {
+                        System.out.println("Espetáculos já foram carregados.");
+                    }
                     break;
 
                 case 2:
