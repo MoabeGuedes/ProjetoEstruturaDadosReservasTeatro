@@ -299,8 +299,8 @@ public class Teatro {
         entrada.nextLine();
         boolean existe = buscarEspetaculos(codigo);
         int posicao = buscarPosicaoEspetaculo(codigo);
-
         if (existe) {
+            System.out.println("\n" + espetaculos.get(posicao).toString());
             exibirAssentos(espetaculos.get(posicao));
         } else {
             System.out.println("Espetáculo não encontrado.");
@@ -414,7 +414,7 @@ public class Teatro {
         if (espetaculoMaiorFaturamento != null) {
             System.out.println("\nEspetáculo com maior faturamento: " + espetaculoMaiorFaturamento.getNome() + " - Faturamento: R$" + maiorFaturamento);
         } else {
-            System.out.println("Nenhum espetáculo cadastrado para calcular o faturamento.");
+            System.out.println("Nenhum faturamento registrado.");
         }
 
         return maiorFaturamento;
