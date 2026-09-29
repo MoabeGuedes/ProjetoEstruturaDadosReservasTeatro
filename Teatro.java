@@ -42,12 +42,12 @@ public class Teatro {
             switch (selecaoMenu) {
 
                 case 1:
+                    if (espetaculoCarregado == true) {
+                        System.out.println("Espetáculos já foram carregados.");
+                    }
                     if (espetaculoCarregado == false) {
                         carregaTXT();
                         System.out.println("Espetáculos Carregados");
-                    }
-                    if (espetaculoCarregado == true) {
-                        System.out.println("Espetáculos já foram carregados.");
                     }
                     break;
 
